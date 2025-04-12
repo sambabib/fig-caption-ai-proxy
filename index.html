@@ -17,6 +17,10 @@
         };
 
         window.onmessage = async (event) => {
+            if (!event.data || !event.data.pluginMessage) {
+                console.error('Invalid message received:', event.data);
+                return;
+            }
             const msg = event.data.pluginMessage;
             console.log('Received message:', msg.type);
             
