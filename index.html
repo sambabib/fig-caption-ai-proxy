@@ -20,7 +20,43 @@
             const msg = event.data.pluginMessage;
             console.log('Received message:', msg.type);
             
-            if (msg.type === 'process-image') {
+            if (msg.type === 'auth') {
+                try {
+                    console.log('Processing auth request');
+                    const response = await fetch(`${msg.apiUrl}/auth`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            secret: msg.secret,
+                            userId: msg.userId
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('Auth successful');
+                    
+                    parent.postMessage({
+                        pluginMessage: {
+                            type: 'auth-result',
+                            token: data.token
+                        }
+                    }, event.origin || '*');
+                } catch (error) {
+                    console.error('Auth error:', error);
+                    parent.postMessage({
+                        pluginMessage: {
+                            type: 'auth-result',
+                            error: error.message
+                        }
+                    }, event.origin || '*');
+                }
+            } else if (msg.type === 'process-image') {
                 try {
                     console.log('Processing image request');
                     const formData = new FormData();
