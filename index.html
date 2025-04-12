@@ -45,7 +45,8 @@
                         pluginMessage: {
                             type: 'auth-result',
                             token: data.token
-                        }
+                        },
+                        pluginId: '1466931211218120784'
                     }, event.origin || '*');
                 } catch (error) {
                     console.error('Auth error:', error);
@@ -53,7 +54,8 @@
                         pluginMessage: {
                             type: 'auth-result',
                             error: error.message
-                        }
+                        },
+                        pluginId: '1466931211218120784'
                     }, event.origin || '*');
                 }
             } else if (msg.type === 'process-image') {
@@ -83,7 +85,8 @@
                             type: 'process-image-result',
                             caption: data.caption,
                             warning: data.warning
-                        }
+                        },
+                        pluginId: '1466931211218120784'
                     }, event.origin || '*');
                 } catch (error) {
                     console.error('Error:', error);
@@ -91,7 +94,8 @@
                         pluginMessage: {
                             type: 'process-image-result',
                             error: error.message
-                        }
+                        },
+                        pluginId: '1466931211218120784'
                     }, event.origin || '*');
                 }
             }
